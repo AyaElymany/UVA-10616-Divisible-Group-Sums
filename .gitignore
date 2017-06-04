@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int n,q,m,d,a[200];
+long long vis[200][20][20];
+
+long long solve(int idx,int num,int v){
+	if(m==num)return !v;
+	if(idx==n)return 0;
+	if(vis[idx][num][v]!=-1)return vis[idx][num][v];
+	return vis[idx][num][v]=solve(idx+1,num,v)+solve(idx+1,num+1,((v+a[idx])%d+d)%d);
+}
+
+int main(){
+	int t=1;
+	scanf("%d%d",&n,&q);
+	while(n&&q){
+		printf("SET %d:\n",t++);
+		for(int i=0;i<n;i++)
+			scanf("%d",&a[i]);
+		for(int i=1;i<=q;i++){
+			scanf("%d%d",&d,&m);
+			memset(vis,-1,sizeof vis);
+			printf("QUERY %d: %lld\n",i,solve(0,0,0));
+		}
+		scanf("%d%d",&n,&q);
+	}
+}
